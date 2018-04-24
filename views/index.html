@@ -2,7 +2,7 @@
 <html lang="en" ng-app="indexApp">
     <head>
         <meta charset="UTF-8">
-        <title>Title</title>
+        <title>Home</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
         <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel = "stylesheet">
         <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
@@ -11,12 +11,27 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
         <script src="javascripts/index.js"></script>
+        <link rel="stylesheet" href="stylesheets/index.css"/>
     </head>
     <body>
         <div ng-controller="IndexController">
-            <!--ALL HTML GOES IN HERE-->
-            <div>GOT HERE</div>
-            <div ng-init="callTestSQL()"></div>
+            <div class="container-fluid">
+                <div class="row justify-content-center">
+                    <div class="col-sm text-center">
+                        <input class="form-control" type="text" name="textSearch" id="searchBox">
+                    </div>
+                    <div class="col-sm text-center">
+                        <select class="form-control" id="categorySelect">
+                            <option value="Select A Value">Select A Value</option>
+                            <option value="Title">Title</option>
+                            <option value="People">People</option>
+                        </select>
+                    </div>
+                    <div class="col-sm text-center">
+                        <input class="btn btn-primary" type="submit" value="Submit" ng-click="submitSearch()">
+                    </div>
+                </div>
+            </div>
         </div>
     </body>
 </html>
