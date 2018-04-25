@@ -1,4 +1,4 @@
-var http = require('http');
+var https = require('https');
 var url = require('url');
 
 function GetPosterFromNameId(name_id, callback) {
@@ -6,7 +6,7 @@ function GetPosterFromNameId(name_id, callback) {
         host: 'www.imdb.com',
         path: '/name/' + name_id + '/'
     };
-    var req = http.request(req_url, (res) => {
+    var req = https.request(req_url, (res) => {
         var body = '';
         res.on('data', (chunk) => {
             body += chunk;
@@ -43,16 +43,18 @@ function GetPosterFromTitleId(title_id, callback) {
         host: 'www.imdb.com',
         path: '/title/' + title_id + '/'
     };
-    var req = http.request(req_url, (res) => {
+    var req = https.request(req_url, (res) => {
         var body = '';
         res.on('data', (chunk) => {
             body += chunk;
         });
         res.on('end', () => {
+            console.log(body);
             var poster_link_pos = body.indexOf('<a href="/title/' + title_id + '/mediaviewer/');
             var poster_img_pos = body.indexOf('<img', poster_link_pos);
             var poster_src_pos = body.indexOf('src=', poster_img_pos) + 5;
             var poster_end_pos = body.indexOf('"', poster_src_pos);
+            console.log(poster_link_pos, poster_img_pos, poster_src_pos, poster_end_pos);
             var poster_url = url.parse(body.substring(poster_src_pos, poster_end_pos));
             if (poster_url.host !== null)
                 callback && callback(null, {host: poster_url.host, path: poster_url.pathname});

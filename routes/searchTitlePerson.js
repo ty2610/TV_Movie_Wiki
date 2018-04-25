@@ -21,17 +21,21 @@ router.post('/', function(req, res, next) {
     //res.render('index', { title: 'Express' });
     var category = req.body.category;
     var searchText = req.body.searchText;
+    searchText = searchText.replace(/[\[\]();]/g, "");
+    searchText = searchText.replace(/[*]/g, "%");
+
     var query = "";
     if(category === "Title") {
-        query = "SELECT * FROM "
-    } else if (category === "Person") {
-
+        query = "SELECT * FROM Titles WHERE primary_title LIKE '" + searchText + "'";
+    } else if (category === "People") {
+        query = "SELECT * FROM Names WHERE primary_name LIKE '" + searchText + "'";
     } else {
-
+        res.send("Incorrect category provided.");
     }
-    /*db.all("SELECT * FROM Crew LIMIT 20", (err, result) => {
+    db.all(query, (err, result) => {
         res.send(JSON.stringify(result));
-    });*/
+        db.close();
+    });
 });
 
 module.exports = router;
