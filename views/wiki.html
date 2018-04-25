@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="resultApp">
+<html lang="en" ng-app="wikiApp">
 <head>
     <meta charset="UTF-8">
     <title>Search Results</title>
@@ -10,12 +10,20 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.js"></script>
-    <script src="javascripts/resultPage.js"></script>
-    <link rel="stylesheet" href="stylesheets/resultPage.css"/>
+    <script src="javascripts/wiki.js"></script>
+    <link rel="stylesheet" href="stylesheets/wiki.css"/>
 </head>
 <body>
-    <div ng-controller="ResultController" ng-init="search()">
+<div class="container" ng-controller="wikiController" ng-init="search()">
+    <div class="row">
+        <div class="col-md-12">
+            <p>Title: {{primaryTitle}}</p>
+            <p>title-type: {{primaryTitle}}</p>
+            <p>Title: {{primaryTitle}}</p>
+
+        </div>
     </div>
+</div>
 
 
 </body>
