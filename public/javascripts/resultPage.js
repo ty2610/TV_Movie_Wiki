@@ -1,6 +1,9 @@
 var resultApp = angular.module('resultApp', []).config(['$locationProvider', function($locationProvider) { $locationProvider.html5Mode({ enabled: true, requireBase: false }); }]);
 
 resultApp.controller('ResultController', function ResultController($scope, $location) {
+    $scope.searchJSON;
+    $scope.isPeople;
+
     $scope.search = () => {
         var paramCategory = $location.search().category;
         var paramSearchText = $location.search().searchText;
@@ -12,9 +15,14 @@ resultApp.controller('ResultController', function ResultController($scope, $loca
             type: 'POST',
             cache: false,
             contentType: "application/x-www-form-urlencoded",
-            success: function (data) {
-                var newData = JSON.parse(data);
-                var block = 0;
+            success: (data) => {
+                if(paramCategory === "People") {
+                    $scope.isPeople = true;
+                } else {
+                    $scope.isPeople = false;
+                }
+                $scope.searchJSON = JSON.parse(data);
+                $scope.$apply();
             },
             error: function (error) {
                 alert(error);
