@@ -15,6 +15,37 @@
 </head>
 <body>
     <div ng-controller="ResultController" ng-init="search()">
+        <div>
+            <div class="container-fluid">
+                <div ng-if="!isPeople">
+                    <div class="row justify-content-center">
+                        <div class="col-sm text-center">Primary Title</div>
+                        <div class="col-sm text-center">Title Type</div>
+                        <div class="col-sm text-center">Start Year</div>
+                        <div class="col-sm text-center">End Year</div>
+                    </div>
+                    <div class="row justify-content-center" ng-repeat="row in searchJSON track by $index" >
+                        <div class="col-sm text-center">{{row.primary_title}}</div>
+                        <div class="col-sm text-center">{{row.title_type}}</div>
+                        <div class="col-sm text-center">{{row.start_year}}</div>
+                        <div class="col-sm text-center">{{row.end_year}}</div>
+                    </div>
+                </div>
+                <div ng-if="isPeople">
+                    <div class="row justify-content-center">
+
+                    </div>
+                    <div class="row justify-content-center" ng-repeat="row in searchJSON track by $index">
+                        <div class="col-sm text-center">
+                        </div>
+                        <div class="col-sm text-center">
+                        </div>
+                        <div class="col-sm text-center">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
 
