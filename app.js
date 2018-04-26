@@ -8,8 +8,9 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var testRouter = require('./routes/test');
 var resultPageRouter = require('./routes/resultPage');
-var searchTitlePerson = require('./routes/searchTitlePerson');
 var wikiRouter = require('./routes/wiki');
+var searchTitlePerson = require('./routes/searchTitlePerson');
+var wikiPopulateRouter = require('./routes/wikiPopulate');
 
 var app = express();
 
@@ -27,8 +28,10 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use("/test", testRouter);
 app.use("/resultPage", resultPageRouter);
-app.use("/searchTitlePerson", searchTitlePerson);
 app.use("/wiki", wikiRouter);
+app.use("/searchTitlePerson", searchTitlePerson);
+app.use("/wikiPopulate", wikiPopulateRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
