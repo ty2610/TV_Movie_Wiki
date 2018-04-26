@@ -15,39 +15,73 @@
 </head>
 <body>
     <div ng-controller="ResultController" ng-init="search()">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href>Air Quality</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarText">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item"><a class="nav-link" href="/" target="_self">Home </a></li>
+                    <li class="nav-item"><a class="nav-link" href="/about" target="_self">About The Project </a></li>
+                </ul>
+            </div>
+        </nav>
+        <div class="container-fluid">
+            <div class="row justify-content-center">
+                <div class="col-sm text-center">
+                    <input class="form-control" type="text" name="textSearch" id="searchBox">
+                </div>
+                <div class="col-sm text-center">
+                    <select class="form-control" id="categorySelect">
+                        <option value="Select A Value">Select A Value</option>
+                        <option value="Title">Title</option>
+                        <option value="People">People</option>
+                    </select>
+                </div>
+                <div class="col-sm text-center">
+                    <input class="btn btn-primary" type="submit" value="Submit" ng-click="submitSearch()">
+                </div>
+            </div>
+        </div>
         <div>
-            <div class="container-fluid">
+            <div class="container-fluid ng-cloak">
                 <div ng-if="!isPeople">
                     <div class="row justify-content-center">
-                        <div class="col-sm text-center">Primary Title</div>
-                        <div class="col-sm text-center">Title Type</div>
-                        <div class="col-sm text-center">Start Year</div>
-                        <div class="col-sm text-center">End Year</div>
+                        <div class="col-sm text-center"><b>Primary Title</b></div>
+                        <div class="col-sm text-center"><b>Title Type</b></div>
+                        <div class="col-sm text-center"><b>Start Year</b></div>
+                        <div class="col-sm text-center"><b>End Year</b></div>
                     </div>
-                    <div class="row justify-content-center" ng-repeat="row in searchJSON track by $index" >
-                        <div class="col-sm text-center">{{row.primary_title}}</div>
-                        <div class="col-sm text-center">{{row.title_type}}</div>
-                        <div class="col-sm text-center">{{row.start_year}}</div>
-                        <div class="col-sm text-center">{{row.end_year}}</div>
-                    </div>
+                    <a ng-href="/wiki?category=Title&id={{row.tconst}}" target="_self" ng-repeat="row in searchJSON track by $index">
+                        <div class="row justify-content-center">
+                            <div class="col-sm text-center">{{row.primary_title}}</div>
+                            <div class="col-sm text-center">{{row.title_type}}</div>
+                            <div class="col-sm text-center">{{row.start_year}}</div>
+                            <div class="col-sm text-center">{{row.end_year}}</div>
+                        </div>
+                    </a>
                 </div>
                 <div ng-if="isPeople">
                     <div class="row justify-content-center">
-
+                        <div class="col-sm text-center"><b>Primary Name</b></div>
+                        <div class="col-sm text-center"><b>Birth Year</b></div>
+                        <div class="col-sm text-center"><b>Death Year</b></div>
+                        <div class="col-sm-6 text-center"><b>Primary Professions</b></div>
                     </div>
-                    <div class="row justify-content-center" ng-repeat="row in searchJSON track by $index">
-                        <div class="col-sm text-center">
-                        </div>
-                        <div class="col-sm text-center">
-                        </div>
-                        <div class="col-sm text-center">
-                        </div>
+                    <div>
+                        <a ng-href="/wiki?category=Person&id={{row.nconst}}" target="_self" ng-repeat="row in searchJSON track by $index">
+                            <div class="row justify-content-center">
+                                <div class="col-sm text-center">{{row.primary_name}}</div>
+                                <div class="col-sm text-center">{{row.birth_year}}</div>
+                                <div class="col-sm text-center">{{row.death_year}}<div ng-if="!row.death_year">Present</div></div>
+                                <div class="col-sm-6 text-center">{{row.primary_profession}}</div>
+                            </div>
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-
 </body>
 </html>
