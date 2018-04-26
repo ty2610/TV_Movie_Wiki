@@ -2,7 +2,7 @@
 <html lang="en" ng-app="wikiApp">
 <head>
     <meta charset="UTF-8">
-    <title>Search Results</title>
+    <title>{{title}}</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel = "stylesheet">
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
@@ -14,13 +14,66 @@
     <link rel="stylesheet" href="stylesheets/wiki.css"/>
 </head>
 <body>
-<div class="container" ng-controller="wikiController" ng-init="search()">
-    <div class="row">
-        <div class="col-md-12">
-            <p>Title: {{primaryTitle}}</p>
-            <p>title-type: {{primaryTitle}}</p>
-            <p>Title: {{primaryTitle}}</p>
+<!-- START NAV -->
+<nav class="navbar navbar-expand-md navbar-light bg-light">
+    <a class="navbar-brand" href="#">Navbar</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+    </div>
+</nav>
+<!-- END NAV -->
 
+<div class="container" ng-controller="wikiController" ng-init="populate()">
+    <div class="row content">
+        <div class="col-md-3">
+            <img id="poster" src="http://meeconline.com/wp-content/uploads/2014/08/placeholder.png" alt="image"/>
+        </div>
+        <div class="col-md-7" ng-show="category == 'People'">
+            <h1 id="nameHeader">{{primaryName}}</h1>
+            <h3 id="birthYear">{{birthYear}} - {{deathYear ? deathYear : 'present'}}</h3>
+            <hr>
+            <p>Profession(s): {{professions}}</p>
+            <p>Known for:</p>
+            <ul ng-repeat="title in titlesJSON"><li><a href="/wiki?category=Title&id={{title.tconst}}">{{title.primary_title}}</a></li></ul>
+            <hr>
+        </div>
+        <div class="col-md-7" ng-show="category == 'Title'">
+            <h1 id="titleHeader">{{primaryTitle}} ({{startYear}}<span ng-if="endYear != null"> - {{endYear}}</span>)</h1>
+            <h3 id="titleTypeHeader">{{titleType}}</h3>
+            <hr>
+            <p>Rating: {{rating}}/10 Stars ({{votes}} votes)</p>
+            <p>Runtime: {{runtime}} Minutes</p>
+            <p>Genre: {{genreList}}</p>
+            <hr>
+            <h3>Principals</h3>
+            <table id="principalTable">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Category</th>
+                        <th>Character(s)</th>
+                    </tr>
+                </thead>
+                <tbody ng-repeat="person in principalObj">
+                <tr>
+                    <td><a href="wiki?category=Person&id={{person.nconst}}">{{person.primary_name ? person.primary_name : '-----'}}</a></td>
+                    <td>{{person.category.charAt(0).toUpperCase()}}{{person.category.slice(1)}}</td>
+                    <td>{{person.characters ? person.characters.replace("[","").replace("]","") : '-----'}}</td>
+                </tr>
+                </tbody>
+
+            </table>
         </div>
     </div>
 </div>

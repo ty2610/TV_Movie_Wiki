@@ -6,8 +6,7 @@ var dbURL;
 if (process.env.NODE_ENV === 'tyler') {
     dbURL = "/Users/tyler.green/Desktop/imdb.sqlite3";
 } else if (process.env.NODE_ENV === 'nick') {
-    //put path to local DB here
-    dbURL = "";
+    dbURL = "C:\\Users\\ntscheel\\Documents\\imdb.sqlite3";
 } else if (process.env.NODE_ENV === 'production') {
     dbURL = "/../imdb.sqlite3";
 }

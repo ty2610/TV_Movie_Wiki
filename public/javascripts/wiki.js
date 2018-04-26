@@ -1,35 +1,111 @@
 var wikiApp = angular.module('wikiApp', []).config(['$locationProvider', function($locationProvider) { $locationProvider.html5Mode({ enabled: true, requireBase: false }); }]);
 
 wikiApp.controller('wikiController', function wikiController($scope, $location) {
-    $scope.primaryTitle = "error";
+    $scope.category = $location.search().category;
+    $scope.title = "Loading...";
 
-    $scope.search = () => {
-        var paramCategory = $location.search().category;
-        var paramSearchText = $location.search().searchText;
-        if(paramCategory == "People"){
-
-        }else if(paramCategory == "Title"){
-
-        }else{
-            //error
-        }
-        var url = "/searchTitlePerson"; //other router to make the http request
-        var send = {category: paramCategory, searchText: paramSearchText};
+    $scope.populate = () => {
+        var paramCategory = $scope.category;
+        var id = $location.search().id;
+        var url = "/wikiPopulate";
+        var send = {id: id, paramCategory: paramCategory};
         $.ajax({
             url: url,
             data: send,
             type: 'POST',
             cache: false,
             contentType: "application/x-www-form-urlencoded",
-            success: function (data) {
-                var newData = JSON.parse(data);
-                var block = 0;
-                $scope.primaryTitle = "hello world!";
+            success: (data) => {
+                console.log("ajax success");
+                if(paramCategory == "Title"){
+                    $scope.parseTitle(JSON.parse(data));
+                }else{
+                    $scope.parsePerson(JSON.parse(data));
+                    console.log(data);
+                }
+
+                $scope.$apply();
             },
             error: function (error) {
-                //alert(error);
-                $scope.primaryTitle = "hello world";
+                console.log("ajax error");
+                console.log(error);
             }
         });
+        if(paramCategory == "Title"){
+            send = {id: id, paramCategory: "Principals"};
+            $.ajax({
+                url: url,
+                data: send,
+                type: 'POST',
+                cache: false,
+                contentType: "application/x-www-form-urlencoded",
+                success: (data) => {
+                    console.log("principals ajax success");
+                    console.log(JSON.parse(data));
+                    $scope.principalObj = JSON.parse(data);
+                    $scope.$apply();
+                },
+                error: function (error) {
+                    console.log("principals ajax error");
+                    console.log(error);
+                }
+            });
+        }
     }
+
+    $scope.parsePerson = (dataJson) => {
+        console.log("parsing Person...");
+        console.log(dataJson);
+        if(dataJson.length > 1){
+            console.log("Error: too many results");
+        }else{
+            var data = dataJson[0];
+            $scope.title = data.primary_name;
+            $scope.primaryName = data.primary_name;
+            $scope.birthYear = data.birth_year;
+            $scope.deathYear = data.death_year;
+            $scope.professions = data.primary_profession.replace(/,/g, ", ").charAt(0).toUpperCase() + data.primary_profession.slice(1);
+            var titlesArr = data.known_for_titles.split(',');
+            console.log(titlesArr);
+            $.ajax({
+                url: "/wikiPopulate",
+                data: {id: data.known_for_titles, paramCategory: "getTitles"},
+                type: 'POST',
+                cache: false,
+                contentType: "application/x-www-form-urlencoded",
+                success: (data) => {
+                    console.log("titles ajax success");
+                    $scope.titlesJSON = JSON.parse(data);
+                    $scope.$apply();
+                },
+                error: function (error) {
+                    console.log("principals ajax error");
+                    console.log(error);
+                }
+            });
+        }
+
+    }
+
+    $scope.parseTitle = (dataJson) => {
+        console.log("parsing Title...");
+        console.log(dataJson);
+        if(dataJson.length > 1){
+            console.log("Error: too many results");
+        }else{
+            var data = dataJson[0];
+            $scope.title = data.primary_title;
+            $scope.primaryTitle = data.primary_title;
+            $scope.startYear = data.start_year;
+            $scope.endYear = data.end_year;
+            $scope.titleType = data.title_type.charAt(0).toUpperCase() + data.title_type.slice(1);
+            $scope.runtime = data.runtime_minutes;
+            $scope.genreList = data.genres.replace(/,/g, ", ");
+            $scope.rating = data.average_rating;
+            $scope.votes = data.num_votes;
+
+        }
+
+    }
+
 });

@@ -1,0 +1,14 @@
+#poster {
+    height: auto;
+    width: 100%;
+    border: 1px solid black;
+}
+.content {
+    margin-top: 15px;
+}
+table, td, th {
+    border: 1px solid grey;
+    border-collapse: collapse;
+    padding: 5px;
+    text-align: center;
+}

@@ -10,7 +10,7 @@ router.post('/', function(req, res, next) {
         dbURL = "/Users/tyler.green/Desktop/imdb.sqlite3";
     } else if (process.env.NODE_ENV === 'nick') {
         //put path to local DB here
-        dbURL = "";
+        dbURL = "C:\\Users\\ntscheel\\Documents\\imdb.sqlite3";
     } else if (process.env.NODE_ENV === 'production') {
         dbURL = "/../imdb.sqlite3";
     }
@@ -32,6 +32,7 @@ router.post('/', function(req, res, next) {
     }
 
     db.all(query, (err, result) => {
+        console.log(JSON.stringify(result));
         res.send(JSON.stringify(result));
         db.close();
     });
