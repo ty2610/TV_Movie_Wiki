@@ -21,9 +21,7 @@ wikiApp.controller('wikiController', function wikiController($scope, $location) 
                     $scope.parseTitle(JSON.parse(data));
                 }else{
                     $scope.parsePerson(JSON.parse(data));
-                    console.log(data);
                 }
-
                 $scope.$apply();
             },
             error: function (error) {
@@ -41,7 +39,6 @@ wikiApp.controller('wikiController', function wikiController($scope, $location) 
                 contentType: "application/x-www-form-urlencoded",
                 success: (data) => {
                     console.log("principals ajax success");
-                    console.log(JSON.parse(data));
                     $scope.principalObj = JSON.parse(data);
                     $scope.$apply();
                 },
@@ -64,7 +61,8 @@ wikiApp.controller('wikiController', function wikiController($scope, $location) 
             $scope.primaryName = data.primary_name;
             $scope.birthYear = data.birth_year;
             $scope.deathYear = data.death_year;
-            $scope.professions = data.primary_profession.replace(/,/g, ", ").charAt(0).toUpperCase() + data.primary_profession.slice(1);
+            $scope.professions = data.primary_profession.charAt(0).toUpperCase() + data.primary_profession.slice(1);
+            $scope.professions = $scope.professions.replace(/,/g, ", ");
             var titlesArr = data.known_for_titles.split(',');
             console.log(titlesArr);
             $.ajax({
@@ -84,12 +82,10 @@ wikiApp.controller('wikiController', function wikiController($scope, $location) 
                 }
             });
         }
-
     }
 
     $scope.parseTitle = (dataJson) => {
         console.log("parsing Title...");
-        console.log(dataJson);
         if(dataJson.length > 1){
             console.log("Error: too many results");
         }else{
@@ -103,9 +99,6 @@ wikiApp.controller('wikiController', function wikiController($scope, $location) 
             $scope.genreList = data.genres.replace(/,/g, ", ");
             $scope.rating = data.average_rating;
             $scope.votes = data.num_votes;
-
         }
-
     }
-
 });

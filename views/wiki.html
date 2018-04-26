@@ -2,7 +2,7 @@
 <html lang="en" ng-app="wikiApp">
 <head>
     <meta charset="UTF-8">
-    <title>{{title}}</title>
+    <title>Wiki</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel = "stylesheet">
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
@@ -10,6 +10,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.js"></script>
+    <script src="../imdb_poster.js"></script>
     <script src="javascripts/wiki.js"></script>
     <link rel="stylesheet" href="stylesheets/wiki.css"/>
 </head>
@@ -41,11 +42,11 @@
         </div>
         <div class="col-md-7" ng-show="category == 'People'">
             <h1 id="nameHeader">{{primaryName}}</h1>
-            <h3 id="birthYear">{{birthYear}} - {{deathYear ? deathYear : 'present'}}</h3>
+            <h3 id="birthYear">{{birthYear}} - {{deathYear ? deathYear : 'Present'}}</h3>
             <hr>
             <p>Profession(s): {{professions}}</p>
             <p>Known for:</p>
-            <ul ng-repeat="title in titlesJSON"><li><a href="/wiki?category=Title&id={{title.tconst}}">{{title.primary_title}}</a></li></ul>
+            <ul ng-repeat="title in titlesJSON"><li><a href="/wiki?category=Title&id={{title.tconst}}" target="_self">{{title.primary_title}}</a></li></ul>
             <hr>
         </div>
         <div class="col-md-7" ng-show="category == 'Title'">
@@ -67,7 +68,7 @@
                 </thead>
                 <tbody ng-repeat="person in principalObj">
                 <tr>
-                    <td><a href="wiki?category=Person&id={{person.nconst}}">{{person.primary_name ? person.primary_name : '-----'}}</a></td>
+                    <td><a href="/wiki?category=People&id={{person.nconst}}" target="_self">{{person.primary_name ? person.primary_name : '-----'}}</a></td>
                     <td>{{person.category.charAt(0).toUpperCase()}}{{person.category.slice(1)}}</td>
                     <td>{{person.characters ? person.characters.replace("[","").replace("]","") : '-----'}}</td>
                 </tr>
