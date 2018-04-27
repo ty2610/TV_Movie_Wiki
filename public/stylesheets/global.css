@@ -140,3 +140,7 @@ svg#mini-loader {
         transform: translate(0, 0);
     }
 }
+.aboutImg {
+    width: 100%;
+    height: auto;
+}
