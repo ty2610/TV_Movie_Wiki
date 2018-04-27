@@ -52,33 +52,39 @@
                         <div class="col-sm text-center"><b>Title Type</b></div>
                         <div class="col-sm text-center"><b>Start Year</b></div>
                         <div class="col-sm text-center"><b>End Year</b></div>
+                        <div class="col-sm text-center"><b>Picture</b></div>
                     </div>
+                    <hr>
                     <a ng-href="/wiki?category=Title&id={{row.tconst}}" target="_self" ng-repeat="row in searchJSON track by $index">
-                        <div class="row justify-content-center">
+                        <div class="row justify-content-center align-items-center">
                             <div class="col-sm text-center">{{row.primary_title}}</div>
                             <div class="col-sm text-center">{{row.title_type}}</div>
-                            <div class="col-sm text-center">{{row.start_year}}</div>
-                            <div class="col-sm text-center">{{row.end_year}}</div>
+                            <div class="col-sm text-center">{{row.start_year}}<div ng-if="!row.start_year">---</div></div>
+                            <div class="col-sm text-center">{{row.end_year}}<div ng-if="!row.end_year">---</div></div>
+                            <div class="col-sm text-center"><img id="posterT-{{$index}}" class="poster" src="http://meeconline.com/wp-content/uploads/2014/08/placeholder.png" alt="image"/></div>
                         </div>
+                        <hr>
                     </a>
                 </div>
                 <div ng-if="isPeople">
                     <div class="row justify-content-center">
-                        <div class="col-sm text-center"><b>Primary Name</b></div>
-                        <div class="col-sm text-center"><b>Birth Year</b></div>
-                        <div class="col-sm text-center"><b>Death Year</b></div>
+                        <div class="col-sm-2 text-center"><b>Primary Name</b></div>
+                        <div class="col-sm-1 text-center"><b>Birth Year</b></div>
+                        <div class="col-sm-1 text-center"><b>Death Year</b></div>
                         <div class="col-sm-6 text-center"><b>Primary Professions</b></div>
+                        <div class="col-sm-2 text-center"><b>Picture</b></div>
                     </div>
-                    <div>
-                        <a ng-href="/wiki?category=Person&id={{row.nconst}}" target="_self" ng-repeat="row in searchJSON track by $index">
-                            <div class="row justify-content-center">
-                                <div class="col-sm text-center">{{row.primary_name}}</div>
-                                <div class="col-sm text-center">{{row.birth_year}}</div>
-                                <div class="col-sm text-center">{{row.death_year}}<div ng-if="!row.death_year">Present</div></div>
-                                <div class="col-sm-6 text-center">{{row.primary_profession}}</div>
-                            </div>
-                        </a>
-                    </div>
+                    <hr>
+                    <a ng-href="/wiki?category=People&id={{row.nconst}}" target="_self" ng-repeat="row in searchJSON track by $index">
+                        <div class="row justify-content-center align-items-center">
+                            <div class="col-sm-2 text-center">{{row.primary_name}}</div>
+                            <div class="col-sm-1 text-center">{{row.birth_year}}</div>
+                            <div class="col-sm-1 text-center">{{row.death_year}}<div ng-if="!row.death_year">Present</div></div>
+                            <div class="col-sm-6 text-center">{{row.primary_profession}}<div ng-if="!row.primary_profession">---</div></div>
+                            <div class="col-sm-2 text-center"><img id="posterP-{{$index}}" class="poster" src="http://meeconline.com/wp-content/uploads/2014/08/placeholder.png" alt="image"/></div>
+                        </div>
+                        <hr>
+                    </a>
                 </div>
             </div>
         </div>

@@ -64,10 +64,46 @@ resultApp.controller('ResultController', function ResultController($scope, $loca
             success: (data) => {
                 $scope.searchJSON = JSON.parse(data);
                 $scope.$apply();
+                $scope.populatePhotos(paramCategory);
             },
             error: function (error) {
                 alert(error);
             }
         });
-    }
+    };
+
+    $scope.populatePhotos = (category) => {
+        for(var i=0; i<$scope.searchJSON.length; i++) {
+            url = "/posterPopulate";
+            var id;
+            var selector;
+            if(category === "People") {
+                id = $scope.searchJSON[i].nconst;
+                selector = "#posterP-";
+            } else {
+                id = $scope.searchJSON[i].tconst;
+                selector = "#posterT-";
+            }
+            send = {id: id, category: category, increment: i};
+            $.ajax({
+                url: url,
+                data: send,
+                type: 'POST',
+                cache: false,
+                contentType: "application/x-www-form-urlencoded",
+                success: (data) => {
+                    if(data !== "error") {
+                        console.log("posters ajax success");
+                        $scope.posterURL = "http://" + data.host + data.path;
+                        $(selector + data.increment).attr("src", $scope.posterURL);
+                        $scope.$apply();
+                    }
+                },
+                error: function (error) {
+                    console.log("posters ajax error");
+                    console.log(error);
+                }
+            });
+        }
+    };
 });

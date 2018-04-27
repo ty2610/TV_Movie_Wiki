@@ -11,6 +11,7 @@ var resultPageRouter = require('./routes/resultPage');
 var wikiRouter = require('./routes/wiki');
 var searchTitlePerson = require('./routes/searchTitlePerson');
 var wikiPopulateRouter = require('./routes/wikiPopulate');
+var posterRouter = require("./routes/posterPopulate");
 
 var app = express();
 
@@ -31,6 +32,7 @@ app.use("/resultPage", resultPageRouter);
 app.use("/wiki", wikiRouter);
 app.use("/searchTitlePerson", searchTitlePerson);
 app.use("/wikiPopulate", wikiPopulateRouter);
+app.use("/posterPopulate", posterRouter);
 
 
 // catch 404 and forward to error handler

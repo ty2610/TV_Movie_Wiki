@@ -47,8 +47,29 @@ wikiApp.controller('wikiController', function wikiController($scope, $location) 
                     console.log(error);
                 }
             });
+            url = "/posterPopulate";
+            send = {id: id, category: "Title"};
+            $.ajax({
+                url: url,
+                data: send,
+                type: 'POST',
+                cache: false,
+                contentType: "application/x-www-form-urlencoded",
+                success: (data) => {
+                    if(data !== "error") {
+                        console.log("posters ajax success");
+                        $scope.posterURL = "http://" + data.host + data.path;
+                        $("#poster").attr("src", $scope.posterURL);
+                        $scope.$apply();
+                    }
+                },
+                error: function (error) {
+                    console.log("posters ajax error");
+                    console.log(error);
+                }
+            });
         }
-    }
+    };
 
     $scope.parsePerson = (dataJson) => {
         console.log("parsing Person...");
@@ -81,8 +102,30 @@ wikiApp.controller('wikiController', function wikiController($scope, $location) 
                     console.log(error);
                 }
             });
+            url = "/posterPopulate";
+            var id = data.nconst;
+            send = {id: id, category: "People"};
+            $.ajax({
+                url: url,
+                data: send,
+                type: 'POST',
+                cache: false,
+                contentType: "application/x-www-form-urlencoded",
+                success: (data) => {
+                    if(data!=="error") {
+                        console.log("posters ajax success");
+                        $scope.posterURL = "http://" + data.host + data.path;
+                        $("#poster").attr("src", $scope.posterURL);
+                        $scope.$apply();
+                    }
+                },
+                error: function (error) {
+                    console.log("posters ajax error");
+                    console.log(error);
+                }
+            });
         }
-    }
+    };
 
     $scope.parseTitle = (dataJson) => {
         console.log("parsing Title...");

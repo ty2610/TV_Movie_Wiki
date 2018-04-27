@@ -16,8 +16,6 @@ router.post('/', function(req, res, next) {
     var db = new sqlite3.Database(dbURL);
 
     var id = req.body.id;
-    id = id.replace(/[\[\]();]/g, "");
-    id = id.replace(/[*]/g, "%");
     var paramCategory = req.body.paramCategory;
     var query  = "";
     if(paramCategory == "People"){
