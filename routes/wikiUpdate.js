@@ -48,7 +48,6 @@ router.post('/', function(req, res, next) {
         }
         query += " WHERE tconst = '" + id + "'";
     }else if(paramCategory == "ordering"){
-        var titleID = req.body.titleID;
         query = "UPDATE Principals SET ordering = " + var1 + " WHERE nconst = '" + id + "' AND tconst = '"+var2+"'; ";
     }
     else{

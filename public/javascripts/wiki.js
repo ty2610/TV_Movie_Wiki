@@ -236,7 +236,9 @@ wikiApp.controller('wikiController', function wikiController($scope, $location) 
 
     $scope.updateTitle = () => {
         var var1 = $('#inputTitleType').val();
+        $scope.titleType = var1;
         var var2 = $('#genreSelect').val().join(", ");
+        $scope.genreList = var2;
         var id = $scope.id;
         var paramCategory = $scope.category;
         console.log("var1: " + var1 + " var2: " + var2 + " id: " + id + " paramCategory:" + paramCategory);
@@ -260,8 +262,11 @@ wikiApp.controller('wikiController', function wikiController($scope, $location) 
 
     $scope.updatePerson = () => {
         var var1 = $('#birthYearInput').val();
+        $scope.birthYear = var1;
         var var2 = $('#deathYearInput').val();
+        $scope.deathYear = var2;
         var var3 = $('#professionsSelect').val().join(", ");
+        $scope.professions = var3;
         var id = $scope.id;
         var paramCategory = $scope.category;
         console.log("var1: " + var1 + " var2: " + var2 + " var3: " + var3 + " id: " + id + " paramCategory:" + paramCategory);
