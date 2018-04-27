@@ -10,7 +10,7 @@ if (process.env.NODE_ENV === 'tyler') {
     //put path to local DB here
     dbURL = "";
 } else if (process.env.NODE_ENV === 'production') {
-    dbURL = "/../imdb.sqlite3";
+    dbURL = "/imdb.sqlite3";
 }
 
 var db = new sqlite3.Database(dbURL);
