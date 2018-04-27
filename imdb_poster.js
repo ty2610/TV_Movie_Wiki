@@ -17,19 +17,25 @@ function GetPosterFromNameId(name_id, callback) {
             var poster_src_pos = body.indexOf('src=', poster_img_pos) + 5;
             var poster_end_pos = body.indexOf('"', poster_src_pos);
             var poster_url = url.parse(body.substring(poster_src_pos, poster_end_pos));
-            if (poster_url.host !== null)
+            if (poster_url.host !== null) {
                 callback && callback(null, {host: poster_url.host, path: poster_url.pathname});
-            else
+                callback = null;
+            }
+            else {
                 callback && callback('poster not found', null);
+                callback = null;
+            }
         });
     });
 
     req.on('error', (err) => {
         callback && callback(err, null);
+        callback = null;
     });
 
     req.on('timeout', () => {
         callback && callback('timeout', null);
+        callback = null;
         req.abort();
     });
 
@@ -56,19 +62,25 @@ function GetPosterFromTitleId(title_id, callback) {
             var poster_end_pos = body.indexOf('"', poster_src_pos);
             console.log(poster_link_pos, poster_img_pos, poster_src_pos, poster_end_pos);
             var poster_url = url.parse(body.substring(poster_src_pos, poster_end_pos));
-            if (poster_url.host !== null)
+            if (poster_url.host !== null) {
                 callback && callback(null, {host: poster_url.host, path: poster_url.pathname});
-            else
+                callback = null;
+            }
+            else {
                 callback && callback('poster not found', null);
+                callback = null;
+            }
         });
     });
 
     req.on('error', (err) => {
         callback && callback(err, null);
+        callback = null;
     });
 
     req.on('timeout', () => {
         callback && callback('timeout', null);
+        callback = null;
         req.abort();
     });
 
