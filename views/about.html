@@ -24,7 +24,7 @@
         <div class="collapse navbar-collapse" id="navbarText">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item"><a class="nav-link" href="/" target="_self">Home </a></li>
-                <li class="nav-item"><a class="nav-link" href="/about" target="_self">About The Project </a></li>
+                <li class="nav-item"><a class="nav-link" href>About The Project </a></li>
             </ul>
         </div>
     </nav>
@@ -34,19 +34,19 @@
             <div class="col-md-8">
                 <h1>About the Project</h1>
                 <p>
-                    Breath of Fresh Air is a project designed for the Web Development course at the University of St. Thomas taught by Dr. Tommy Marrinan. For this project, our goal was to create an air quality web app that combines the visualization of Google Maps with the data provided by the OpenAQ Platform.
+                    This project is an implementation of a wiki-lite page for imdb titles (shows and movies). Allowing users to easily browse data, and change the data if it is incorrect.
                 </p>
-                <h3>Google Maps API</h3>
+                <h3>SQLite3 - IMDB DB</h3>
                 <p>
-                    The <a target="_blank" href="https://developers.google.com/maps/">Google Maps API</a> is the backbone of the Breath of Fresh Air project, powering the main functionality and allowing us to serve relevant air quality data for the location shown in the map. To further increase the usability of the map, we used a feature called Marker Clustering to reduce cluttering on screen. Speaking of the markers, try clicking on one! It will show the measurement gathered at that location.
+                    <a target="_blank" href="https://www.npmjs.com/package/sqlite3">SQLite3</a> is a tool that can be used alongside Node.js to query a database with SQL. This allowed us to pull dynamic data from the IMDB's database of actors, shows, and movies.
                 </p>
-                <h3>OpenAQ</h3>
+                <h3>Node.js - Express.js</h3>
                 <p>
-                    While Google Maps is the technological centerpiece of this project, <a target="_blank" href="https://openaq.org">OpenAQ</a> is the information one. Gathering air quality measurments from 8,415 location in 64 countries, OpenAQ is fighting to increase awareness and reduce air pollution by aggregating data from 103 different government level and research grade sources and providing a free API to access this data. to learn more information about OpenAQ, we recommend visiting their <a target="_blank" href="https://github.com/openaq/openaq-info/blob/master/FAQ.md">FAQ</a>.
+                    <a target="_blank" href="https://nodejs.org/en/">Node.js</a> is an open-source, cross-platform JavaScript run-time environment that executes JavaScript code server-side. This was used to execute commands with SQLite3 and serve files to the browser. <a target="_blank" href="https://www.npmjs.com/package/express">Express.js</a> is a web application framework for Node.js that allows for better management of requests made to the Node.js server.
                 </p>
-                <h3>Frameworks</h3>
+                <h3>Bootstrap4 - Angular.js - jQuery</h3>
                 <p>
-                    This site was created using both <a target="_blank" href="https://getbootstrap.com/">Bootstrap 4</a> and <a target="_blank" href="https://angularjs.org/">AngularJS</a>. Bootstrap was used to format the page correctly using their grid system to section the page and prvice some default CSS styling. Angular was used for its templating and table creation. The font used is Called <a target="_blank" href="https://fonts.google.com/specimen/Raleway">Raleway</a>, which is from Google Fonts. For more details, take a look at our <a target="_blank" href="https://github.com/ntscheel/AirQualityApp">source code</a>!
+                    This site was created using both <a target="_blank" href="https://getbootstrap.com/">Bootstrap 4</a> and <a target="_blank" href="https://angularjs.org/">AngularJS</a>. Bootstrap was used to format the page correctly using their grid system to section the page and prvice some default CSS styling. Angular was used for sending requests to the Node.js server for dynamic to populate and edit the pages. We also used <a target="_blank" href="https://jquery.com/">jQuery</a> for manipulation of the DOM.
                 </p>
             </div>
         </div>
@@ -69,11 +69,12 @@
                     I'm a senior computer science major at the University of St. Thomas looking to begin my career in software development. In addition to my studies I serve as the President of the Computer Science Club, and I'm also an avid tabletop board game enthusiast!            </p>
             </div>
             <div class="col-md-4">
-                <img src="img/zach.jpg" alt="ZachSorensonImage" class="aboutImg"/>
-                <h3>Zach Sorenson</h3>
+                <img src="images/tg_pic.jpeg" alt="ZachSorensonImage" class="aboutImg"/>
+                <h3>Tyler Green</h3>
                 <p>
-                    I'm a junior at UST majoring in Computer Science with minors in Math and Statistics. Besides my love of technology, I love singing and acting, and do lots of musical theater in my spare time.
-                </p>
+                    A full-stack software engineer senior of The University of St. Thomas. When he isn't learning iOS or
+                    servlet functionalities, he goes airsofting, snowboarding, or plays video games. He has a passion for
+                    watching and participating in soccer and fitness.                </p>
             </div>
         </div>
     </div>
