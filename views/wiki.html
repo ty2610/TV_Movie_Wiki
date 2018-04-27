@@ -45,7 +45,12 @@
             <hr>
             <p>Profession(s): {{professions}}</p>
             <p>Known for:</p>
-            <ul ng-repeat="title in titlesJSON"><li><a href="/wiki?category=Title&id={{title.tconst}}" target="_self">{{title.primary_title}}</a></li></ul>
+            <ul ng-repeat="title in titlesJSON track by $index">
+                <li>
+                    <a href="/wiki?category=Title&id={{title.tconst}}" target="_self">{{title.primary_title}}</a>
+                </li>
+                <img class="poster" id="posterK-{{$index}}" src="http://meeconline.com/wp-content/uploads/2014/08/placeholder.png" alt="image"/>
+            </ul>
             <hr>
         </div>
         <div class="col-md-7" ng-show="category == 'Title'">

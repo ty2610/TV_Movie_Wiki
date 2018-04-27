@@ -96,6 +96,7 @@ wikiApp.controller('wikiController', function wikiController($scope, $location) 
                     console.log("titles ajax success");
                     $scope.titlesJSON = JSON.parse(data);
                     $scope.$apply();
+                    $scope.populateKnownPosters();
                 },
                 error: function (error) {
                     console.log("principals ajax error");
@@ -143,5 +144,33 @@ wikiApp.controller('wikiController', function wikiController($scope, $location) 
             $scope.rating = data.average_rating;
             $scope.votes = data.num_votes;
         }
-    }
+    };
+
+    $scope.populateKnownPosters = () => {
+        for(var i=0; i<$scope.titlesJSON.length; i++) {
+            var category = "Title";
+            var id = $scope.titlesJSON[i].tconst;
+            var selector = "#posterK-";
+            send = {id: id, category: category, increment: i};
+            $.ajax({
+                url: url,
+                data: send,
+                type: 'POST',
+                cache: false,
+                contentType: "application/x-www-form-urlencoded",
+                success: (data) => {
+                    if (data !== "error") {
+                        console.log("posters ajax success");
+                        $scope.posterURL = "http://" + data.host + data.path;
+                        $(selector + data.increment).attr("src", $scope.posterURL);
+                        $scope.$apply();
+                    }
+                },
+                error: function (error) {
+                    console.log("posters ajax error");
+                    console.log(error);
+                }
+            });
+        }
+    };
 });
