@@ -12,71 +12,91 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.js"></script>
     <script src="javascripts/wiki.js"></script>
     <link rel="stylesheet" href="stylesheets/wiki.css"/>
+    <link rel="stylesheet" href="stylesheets/global.css"/>
 </head>
 <body class="ng-cloak">
-<!-- START NAV -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href>Wiki</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarText">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item"><a class="nav-link" href="/" target="_self">Home </a></li>
-            <li class="nav-item"><a class="nav-link" href="/about" target="_self">About The Project </a></li>
-        </ul>
-    </div>
-</nav>
-<!-- END NAV -->
-
-<div class="container" ng-controller="wikiController" ng-init="populate()">
-    <div class="row content">
-        <div class="col-md-3">
-            <img id="poster" src="http://meeconline.com/wp-content/uploads/2014/08/placeholder.png" alt="image"/>
-        </div>
-        <div class="col-md-7" ng-show="category == 'People'">
-            <h1 id="nameHeader">{{primaryName}}</h1>
-            <h3 id="birthYear">{{birthYear}} - {{deathYear ? deathYear : 'Present'}}</h3>
-            <hr>
-            <p>Profession(s): {{professions}}</p>
-            <p>Known for:</p>
-            <ul ng-repeat="title in titlesJSON track by $index">
-                <hr>
+<div ng-controller="wikiController" ng-init="populate()">
+    <!-- START NAV -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href>Wiki</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item"><a class="nav-link" href="/" target="_self">Home </a></li>
+                <li class="nav-item"><a class="nav-link" href="/about" target="_self">About The Project </a></li>
                 <li>
-                    <a href="/wiki?category=Title&id={{title.tconst}}" target="_self">{{title.primary_title}}</a>
+                    <div class="mini-loader-content">
+                        <svg id="mini-loader" ng-show="useSpinner" xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 500.00001 500.00001">
+                            <g>
+                                <path id="b0" d="M66.734 66.734v366.533h366.532V66.734H66.734zm15 15h336.532v336.533H81.734V81.734z">
+                                </path>
+                                <path id="b2" d="M354.16 2.5v143.34H497.5V2.5H354.16zm10 10H487.5v123.34H364.16V12.5z">
+                                </path>
+                                <path id="b1" d="M0 2.5v143.34h143.34V2.5H0zm10 10h123.34v123.34H10V12.5z">
+                                </path>
+                                <path id="b3" d="M354.16 356.66V500H497.5V356.66H354.16zm10 10H487.5V490H364.16V366.66z">
+                                </path>
+                                <path id="b4" d="M0 356.66V500h143.34V356.66H0zm10 10h123.34V490H10V366.66z">
+                                </path>
+                            </g>
+                        </svg>
+                    </div>
                 </li>
-                <img class="poster" id="posterK-{{$index}}" src="http://meeconline.com/wp-content/uploads/2014/08/placeholder.png" alt="image"/>
             </ul>
-            <hr>
         </div>
-        <div class="col-md-7" ng-show="category == 'Title'">
-            <h1 id="titleHeader">{{primaryTitle}} ({{startYear}}<span ng-if="endYear != null"> - {{endYear}}</span>)</h1>
-            <h3 id="titleTypeHeader">{{titleType}}</h3>
-            <hr>
-            <p>Rating: {{rating}}/10 Stars ({{votes}} votes)</p>
-            <p>Runtime: {{runtime}} Minutes</p>
-            <p>Genre: {{genreList}}</p>
-            <hr>
-            <h3>Principals</h3>
-            <table id="principalTable">
-                <thead>
+    </nav>
+    <!-- END NAV -->
+    <div class="container">
+        <div class="row content">
+            <div class="col-md-3">
+                <img id="poster" src="http://meeconline.com/wp-content/uploads/2014/08/placeholder.png" alt="image"/>
+            </div>
+            <div class="col-md-7" ng-show="category == 'People'">
+                <h1 id="nameHeader">{{primaryName}}</h1>
+                <h3 id="birthYear">{{birthYear}} - {{deathYear ? deathYear : 'Present'}}</h3>
+                <hr>
+                <p>Profession(s): {{professions}}</p>
+                <p>Known for:</p>
+                <ul ng-repeat="title in titlesJSON track by $index">
+                    <hr>
+                    <li>
+                        <a href="/wiki?category=Title&id={{title.tconst}}" target="_self">{{title.primary_title}}</a>
+                    </li>
+                    <img class="poster" id="posterK-{{$index}}" src="http://meeconline.com/wp-content/uploads/2014/08/placeholder.png" alt="image"/>
+                </ul>
+                <hr>
+            </div>
+            <div class="col-md-7" ng-show="category == 'Title'">
+                <h1 id="titleHeader">{{primaryTitle}} ({{startYear}}<span ng-if="endYear != null"> - {{endYear}}</span>)</h1>
+                <h3 id="titleTypeHeader">{{titleType}}</h3>
+                <hr>
+                <p>Rating: {{rating}}/10 Stars ({{votes}} votes)</p>
+                <p>Runtime: {{runtime}} Minutes</p>
+                <p>Genre: {{genreList}}</p>
+                <hr>
+                <h3>Principals</h3>
+                <table id="principalTable">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Category</th>
+                            <th>Character(s)</th>
+                            <th>Picture</th>
+                        </tr>
+                    </thead>
+                    <tbody ng-repeat="person in principalObj">
                     <tr>
-                        <th>Name</th>
-                        <th>Category</th>
-                        <th>Character(s)</th>
-                        <th>Picture</th>
+                        <td><a href="/wiki?category=People&id={{person.nconst}}" target="_self">{{person.primary_name ? person.primary_name : '-----'}}</a></td>
+                        <td>{{person.category.charAt(0).toUpperCase()}}{{person.category.slice(1)}}</td>
+                        <td>{{person.characters ? person.characters.replace("[","").replace("]","") : '-----'}}</td>
+                        <td><img class="poster" id="posterC-{{$index}}" src="http://meeconline.com/wp-content/uploads/2014/08/placeholder.png" alt="image"/></td>
                     </tr>
-                </thead>
-                <tbody ng-repeat="person in principalObj">
-                <tr>
-                    <td><a href="/wiki?category=People&id={{person.nconst}}" target="_self">{{person.primary_name ? person.primary_name : '-----'}}</a></td>
-                    <td>{{person.category.charAt(0).toUpperCase()}}{{person.category.slice(1)}}</td>
-                    <td>{{person.characters ? person.characters.replace("[","").replace("]","") : '-----'}}</td>
-                    <td><img class="poster" id="posterC-{{$index}}" src="http://meeconline.com/wp-content/uploads/2014/08/placeholder.png" alt="image"/></td>
-                </tr>
-                </tbody>
+                    </tbody>
 
-            </table>
+                </table>
+            </div>
         </div>
     </div>
 </div>

@@ -9,6 +9,8 @@ var resultApp = angular.module('resultApp', []).config(['$locationProvider', fun
 resultApp.controller('ResultController', function ResultController($scope, $location) {
     $scope.searchJSON;
     $scope.isPeople;
+    $scope.useSpinner = false;
+    $scope.spinnerImageCounter;
 
     $scope.submitSearch = () => {
         var category = $("#categorySelect").val();
@@ -23,6 +25,7 @@ resultApp.controller('ResultController', function ResultController($scope, $loca
     };
 
     $scope.search = (cat,text) => {
+        $scope.useSpinner = true;
         var paramCategory;
         var paramSearchText;
         if(cat!==undefined) {
@@ -73,6 +76,7 @@ resultApp.controller('ResultController', function ResultController($scope, $loca
     };
 
     $scope.populatePhotos = (category) => {
+        $scope.spinnerImageCounter = $scope.searchJSON.length;
         for(var i=0; i<$scope.searchJSON.length; i++) {
             url = "/posterPopulate";
             var id;
@@ -92,6 +96,11 @@ resultApp.controller('ResultController', function ResultController($scope, $loca
                 cache: false,
                 contentType: "application/x-www-form-urlencoded",
                 success: (data) => {
+                    $scope.spinnerImageCounter--;
+                    if($scope.spinnerImageCounter<=0){
+                        $scope.$apply();
+                        $scope.useSpinner = false;
+                    }
                     if(data !== "error") {
                         console.log("posters ajax success");
                         $scope.posterURL = "http://" + data.host + data.path;
@@ -100,6 +109,11 @@ resultApp.controller('ResultController', function ResultController($scope, $loca
                     }
                 },
                 error: function (error) {
+                    $scope.spinnerImageCounter--;
+                    if($scope.spinnerImageCounter<=0){
+                        $scope.$apply();
+                        $scope.useSpinner = false;
+                    }
                     console.log("posters ajax error");
                     console.log(error);
                 }
