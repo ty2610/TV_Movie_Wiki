@@ -49,8 +49,7 @@ router.post('/', function(req, res, next) {
         query += " WHERE tconst = '" + id + "'";
     }else if(paramCategory == "ordering"){
         var titleID = req.body.titleID;
-        query = "UPDATE Principals SET ordering = " + var2 + " WHERE nconst = '" + id + "' AND tconst = '"+titleID+"'; ";
-        query += "UPDATE Principals SET ordering = " + var3 + " WHERE nconst = '" + var1 + "' AND tconst = '"+titleID+"'; ";
+        query = "UPDATE Principals SET ordering = " + var1 + " WHERE nconst = '" + id + "' AND tconst = '"+var2+"'; ";
     }
     else{
         res.send("Incorrect category provided.");

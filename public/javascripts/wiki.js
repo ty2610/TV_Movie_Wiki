@@ -283,10 +283,10 @@ wikiApp.controller('wikiController', function wikiController($scope, $location) 
         });
     }
 
-    $scope.updateOrdering = (id1, ordering1, id2, ordering2) => {
+    $scope.updateOrdering = (id, ordering) => {
         $.ajax({
             url: "/wikiUpdate",
-            data: {var1: id2, var2: ordering1, var3: ordering2, id: id1, paramCategory: "ordering", titleID: $scope.id},
+            data: {var1: ordering, id: id, paramCategory: "ordering", var2: $scope.id},
             type: 'POST',
             cache: false,
             contentType: "application/x-www-form-urlencoded",
@@ -315,7 +315,8 @@ wikiApp.controller('wikiController', function wikiController($scope, $location) 
                 tempArr[index].ordering = ordering;
                 tempArr[index-1].ordering = ordering-1;
 
-                $scope.updateOrdering(tempArr[index].nconst, tempArr[index].ordering, tempArr[index-1].nconst, tempArr[index-1].ordering);
+                $scope.updateOrdering(tempArr[index].nconst, tempArr[index].ordering);
+                $scope.updateOrdering(tempArr[index-1].nconst, tempArr[index-1].ordering);
 
                 console.log("At end: " + tempArr[index].primary_name + "("+tempArr[index].ordering+") and " + tempArr[index-1].primary_name + "("+tempArr[index-1].ordering+")");
             }
@@ -327,7 +328,8 @@ wikiApp.controller('wikiController', function wikiController($scope, $location) 
                 tempArr[index].ordering = ordering;
                 tempArr[index+1].ordering = ordering+1;
 
-                $scope.updateOrdering(tempArr[index].nconst, tempArr[index].ordering, tempArr[index+1].nconst, tempArr[index+1].ordering);
+                $scope.updateOrdering(tempArr[index].nconst, tempArr[index].ordering);
+                $scope.updateOrdering(tempArr[index+1].nconst, tempArr[index+1].ordering);
                 console.log("At end: " + tempArr[index].primary_name + "("+tempArr[index].ordering+") and " + tempArr[index+1].primary_name + "("+tempArr[index+1].ordering+")");
             }
         }
