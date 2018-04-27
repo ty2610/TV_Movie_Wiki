@@ -4,8 +4,11 @@ wikiApp.controller('wikiController', function wikiController($scope, $location) 
     $scope.category = $location.search().category;
     $scope.id = $location.search().id;
     $scope.edit = false;
+    $scope.useSpinner = false;
+    $scope.spinnerImageCounter;
 
     $scope.populate = () => {
+        $scope.useSpinner = true;
         var paramCategory = $scope.category;
         var id = $scope.id;
         var url = "/wikiPopulate";
@@ -152,6 +155,7 @@ wikiApp.controller('wikiController', function wikiController($scope, $location) 
     };
 
     $scope.populateKnownPosters = () => {
+        $scope.spinnerImageCounter = $scope.titlesJSON.length;
         for(var i=0; i<$scope.titlesJSON.length; i++) {
             var category = "Title";
             var id = $scope.titlesJSON[i].tconst;
@@ -165,6 +169,11 @@ wikiApp.controller('wikiController', function wikiController($scope, $location) 
                 cache: false,
                 contentType: "application/x-www-form-urlencoded",
                 success: (data) => {
+                    $scope.spinnerImageCounter--;
+                    if($scope.spinnerImageCounter<=0){
+                        $scope.$apply();
+                        $scope.useSpinner = false;
+                    }
                     if (data !== "error") {
                         console.log("posters ajax success");
                         $scope.posterURL = "http://" + data.host + data.path;
@@ -173,6 +182,11 @@ wikiApp.controller('wikiController', function wikiController($scope, $location) 
                     }
                 },
                 error: function (error) {
+                    $scope.spinnerImageCounter--;
+                    if($scope.spinnerImageCounter<=0){
+                        $scope.$apply();
+                        $scope.useSpinner = false;
+                    }
                     console.log("posters ajax error");
                     console.log(error);
                 }
@@ -181,6 +195,7 @@ wikiApp.controller('wikiController', function wikiController($scope, $location) 
     };
 
     $scope.populatePincipalPoster = () => {
+        $scope.spinnerImageCounter = $scope.principalObj.length;
         for(var i=0; i<$scope.principalObj.length; i++) {
             var category = "People";
             var id = $scope.principalObj[i].nconst;
@@ -194,6 +209,11 @@ wikiApp.controller('wikiController', function wikiController($scope, $location) 
                 cache: false,
                 contentType: "application/x-www-form-urlencoded",
                 success: (data) => {
+                    $scope.spinnerImageCounter--;
+                    if($scope.spinnerImageCounter<=0){
+                        $scope.useSpinner = false;
+                        $scope.$apply();
+                    }
                     if (data !== "error") {
                         console.log("posters ajax success");
                         $scope.posterURL = "http://" + data.host + data.path;
@@ -202,6 +222,11 @@ wikiApp.controller('wikiController', function wikiController($scope, $location) 
                     }
                 },
                 error: function (error) {
+                    $scope.spinnerImageCounter--;
+                    if($scope.spinnerImageCounter<=0){
+                        $scope.useSpinner = false;
+                        $scope.$apply();
+                    }
                     console.log("posters ajax error");
                     console.log(error);
                 }

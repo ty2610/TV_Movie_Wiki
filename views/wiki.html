@@ -13,125 +13,144 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.js"></script>
     <script src="javascripts/wiki.js"></script>
     <link rel="stylesheet" href="stylesheets/wiki.css"/>
+    <link rel="stylesheet" href="stylesheets/global.css"/>
 </head>
-<body class="ng-cloak" ng-controller="wikiController" ng-init="populate()">
-<!-- START NAV -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href>Wiki</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarText">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item"><a class="nav-link" href="/" target="_self">Home </a></li>
-            <li class="nav-item"><a class="nav-link" href="/about" target="_self">About The Project </a></li>
-            <li><button class="btn" ng-hide="edit" ng-click="editPage()">Edit</button><button class="btn" ng-show="edit" ng-click="submitChanges()">Submit Changes</button></li>
-        </ul>
-    </div>
-</nav>
-<!-- END NAV -->
-
-<div class="container">
-    <div class="row content">
-        <div class="col-md-3">
-            <img id="poster" src="http://meeconline.com/wp-content/uploads/2014/08/placeholder.png" alt="image"/>
-        </div>
-        <div class="col-md-7" ng-show="category == 'People'">
-            <h1 id="nameHeader">{{primaryName}}</h1>
-            <h3 id="birthYear" ng-hide="edit">{{birthYear}} - {{deathYear ? deathYear : 'Present'}}</h3>
-            <div class="birthYearInputs" ng-show="edit">
-                    <div class="row">
-                    <div class="col">
-                        <label for="birthYearInput">Birth Year</label>
-                        <input type="number" class="form-control" id="birthYearInput" value="{{birthYear}}">
-                    </div>
-                    <div class="col">
-                        <label for="deathYearInput">Death Year</label>
-                        <input type="number" class="form-control" id="deathYearInput" aria-describedby="deathYearHelp" placeholder="Present" value="{{deathYear}}">
-                        <small id="deathYearHelp" class="form-text text-muted">If they are still alive, leave empty.</small>
-                    </div>
-                </div>
-            </div>
-            <hr>
-            <p><span ng-show="edit">Current Listed </span>Profession(s): {{professions}}</p>
-            <div class="birthYearInputs" ng-show="edit">
-                <div class="form-group">
-                    <label for="professionsSelect">Profession(s):</label>
-                    <select multiple class="form-control" id="professionsSelect">
-                        <option>Actor</option>
-                        <option>Director</option>
-                        <option>Composer</option>
-                        <option>Producer</option>
-                        <option>Soundtrack</option>
-                        <option>Writer</option>
-                    </select>
-                </div>
-            </div>
-            <p>Known for:</p>
-            <ul ng-repeat="title in titlesJSON track by $index">
-                <hr>
+<body class="ng-cloak">
+<div ng-controller="wikiController" ng-init="populate()">
+    <!-- START NAV -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href>Wiki</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item"><a class="nav-link" href="/" target="_self">Home </a></li>
+                <li class="nav-item"><a class="nav-link" href="/about" target="_self">About The Project </a></li>
+                <li><button class="btn" ng-hide="edit" ng-click="editPage()">Edit</button><button class="btn" ng-show="edit" ng-click="submitChanges()">Submit Changes</button></li>
                 <li>
-                    <a href="/wiki?category=Title&id={{title.tconst}}" target="_self">{{title.primary_title}}</a>
+                    <div class="mini-loader-content">
+                        <svg id="mini-loader" ng-show="useSpinner" xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 500.00001 500.00001">
+                            <g>
+                                <path id="b0" d="M66.734 66.734v366.533h366.532V66.734H66.734zm15 15h336.532v336.533H81.734V81.734z">
+                                </path>
+                                <path id="b2" d="M354.16 2.5v143.34H497.5V2.5H354.16zm10 10H487.5v123.34H364.16V12.5z">
+                                </path>
+                                <path id="b1" d="M0 2.5v143.34h143.34V2.5H0zm10 10h123.34v123.34H10V12.5z">
+                                </path>
+                                <path id="b3" d="M354.16 356.66V500H497.5V356.66H354.16zm10 10H487.5V490H364.16V366.66z">
+                                </path>
+                                <path id="b4" d="M0 356.66V500h143.34V356.66H0zm10 10h123.34V490H10V366.66z">
+                                </path>
+                            </g>
+                        </svg>
+                    </div>
                 </li>
-                <img class="poster" id="posterK-{{$index}}" src="http://meeconline.com/wp-content/uploads/2014/08/placeholder.png" alt="image"/>
             </ul>
-            <hr>
         </div>
-        <div class="col-md-7" ng-show="category == 'Title'">
-            <h1 id="titleHeader">{{primaryTitle}} ({{startYear}}<span ng-if="endYear != null"> - {{endYear}}</span>)</h1>
-            <h3 id="titleTypeHeader" ng-hide="edit">{{titleType}}</h3>
-            <div class="form-group" ng-show="edit">
-                <select id="inputTitleType" class="form-control">
-                    <option selected>{{titleType}}</option>
-                    <option disabled>--------------</option>
-                    <option>Short</option>
-                    <option>Movie</option>
-                    <option>TV Movie</option>
-                    <option>TV Series</option>
-                    <option>TV Short</option>
-                    <option>TV Mini Series</option>
-                    <option>TV Special</option>
-                    <option>Video Game</option>
-                </select>
+    </nav>
+    <!-- END NAV -->
+    <div class="container">
+        <div class="row content">
+            <div class="col-md-3">
+                <img id="poster" src="http://meeconline.com/wp-content/uploads/2014/08/placeholder.png" alt="image"/>
             </div>
-            <hr>
-            <p>Rating: {{rating}}/10 Stars ({{votes}} votes)</p>
-            <p>Runtime: {{runtime}} Minutes</p>
-            <p><span ng-show="edit">Current </span>Genre(s): {{genreList}}</p>
-            <div class="generInputs" ng-show="edit">
-                <div class="form-group">
-                    <label for="genreSelect">Select Genre(s):</label>
-                    <select multiple class="form-control" id="genreSelect">
-                        <option>Action</option>
-                        <option>Adventure</option>
-                        <option>Animation</option>
-                        <option>Biography</option>
-                        <option>Comedy</option>
-                        <option>Crime</option>
-                        <option>Documentary</option>
-                        <option>Drama</option>
-                        <option>Family</option>
-                        <option>Fantasy</option>
-                        <option>Film Noir</option>
-                        <option>History</option>
-                        <option>Horror</option>
-                        <option>Musical</option>
-                        <option>Mystery</option>
-                        <option>Romance</option>
-                        <option>Sci-Fi</option>
+            <div class="col-md-7" ng-show="category == 'People'">
+                <h1 id="nameHeader">{{primaryName}}</h1>
+                <h3 id="birthYear" ng-hide="edit">{{birthYear}} - {{deathYear ? deathYear : 'Present'}}</h3>
+                <div class="birthYearInputs" ng-show="edit">
+                    <div class="row">
+                        <div class="col">
+                            <label for="birthYearInput">Birth Year</label>
+                            <input type="number" class="form-control" id="birthYearInput" value="{{birthYear}}">
+                        </div>
+                        <div class="col">
+                            <label for="deathYearInput">Death Year</label>
+                            <input type="number" class="form-control" id="deathYearInput" aria-describedby="deathYearHelp" placeholder="Present" value="{{deathYear}}">
+                            <small id="deathYearHelp" class="form-text text-muted">If they are still alive, leave empty.</small>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <p><span ng-show="edit">Current Listed </span>Profession(s): {{professions}}</p>
+                <div class="birthYearInputs" ng-show="edit">
+                    <div class="form-group">
+                        <label for="professionsSelect">Profession(s):</label>
+                        <select multiple class="form-control" id="professionsSelect">
+                            <option>Actor</option>
+                            <option>Director</option>
+                            <option>Composer</option>
+                            <option>Producer</option>
+                            <option>Soundtrack</option>
+                            <option>Writer</option>
+                        </select>
+                    </div>
+                </div>
+                <p>Known for:</p>
+                <ul ng-repeat="title in titlesJSON track by $index">
+                    <hr>
+                    <li>
+                        <a href="/wiki?category=Title&id={{title.tconst}}" target="_self">{{title.primary_title}}</a>
+                    </li>
+                    <img class="poster" id="posterK-{{$index}}" src="http://meeconline.com/wp-content/uploads/2014/08/placeholder.png" alt="image"/>
+                </ul>
+                <hr>
+            </div>
+            <div class="col-md-7" ng-show="category == 'Title'">
+                <h1 id="titleHeader">{{primaryTitle}} ({{startYear}}<span ng-if="endYear != null"> - {{endYear}}</span>)</h1>
+                <h3 id="titleTypeHeader" ng-hide="edit">{{titleType}}</h3>
+                <div class="form-group" ng-show="edit">
+                    <select id="inputTitleType" class="form-control">
+                        <option selected>{{titleType}}</option>
+                        <option disabled>--------------</option>
                         <option>Short</option>
-                        <option>Sport</option>
-                        <option>Superhero</option>
-                        <option>Thriller</option>
-                        <option>War</option>
-                        <option>Western</option>
+                        <option>Movie</option>
+                        <option>TV Movie</option>
+                        <option>TV Series</option>
+                        <option>TV Short</option>
+                        <option>TV Mini Series</option>
+                        <option>TV Special</option>
+                        <option>Video Game</option>
                     </select>
                 </div>
-            </div>
-            <hr>
-            <h3>Principals</h3>
-            <table id="principalTable">
-                <thead>
+                <hr>
+                <p>Rating: {{rating}}/10 Stars ({{votes}} votes)</p>
+                <p>Runtime: {{runtime}} Minutes</p>
+                <p><span ng-show="edit">Current </span>Genre(s): {{genreList}}</p>
+                <div class="generInputs" ng-show="edit">
+                    <div class="form-group">
+                        <label for="genreSelect">Select Genre(s):</label>
+                        <select multiple class="form-control" id="genreSelect">
+                            <option>Action</option>
+                            <option>Adventure</option>
+                            <option>Animation</option>
+                            <option>Biography</option>
+                            <option>Comedy</option>
+                            <option>Crime</option>
+                            <option>Documentary</option>
+                            <option>Drama</option>
+                            <option>Family</option>
+                            <option>Fantasy</option>
+                            <option>Film Noir</option>
+                            <option>History</option>
+                            <option>Horror</option>
+                            <option>Musical</option>
+                            <option>Mystery</option>
+                            <option>Romance</option>
+                            <option>Sci-Fi</option>
+                            <option>Short</option>
+                            <option>Sport</option>
+                            <option>Superhero</option>
+                            <option>Thriller</option>
+                            <option>War</option>
+                            <option>Western</option>
+                        </select>
+                    </div>
+                </div>
+                <hr>
+                <h3>Principals</h3>
+                <table id="principalTable">
+                    <thead>
                     <tr>
                         <th ng-show="edit"></th>
                         <th>Name</th>
@@ -139,20 +158,23 @@
                         <th>Character(s)</th>
                         <th>Picture</th>
                     </tr>
-                </thead>
-                <tbody id="principalTableBody" ng-repeat="person in principalObj">
-                <tr>
-                    <td ng-show="edit"><i class="fas fa-arrow-up" ng-hide="person.ordering == 1" ng-click="rearrange('up', person.ordering)"></i> <i class="fas fa-arrow-down" ng-click="rearrange('down', person.ordering)"></i></td>
-                    <td><a href="/wiki?category=People&id={{person.nconst}}" target="_self">{{person.primary_name ? person.primary_name : '-----'}}</a></td>
-                    <td>{{person.category.charAt(0).toUpperCase()}}{{person.category.slice(1)}}</td>
-                    <td>{{person.characters ? person.characters.replace("[","").replace("]","") : '-----'}}</td>
-                    <td><img class="poster" id="posterC-{{$index}}" src="http://meeconline.com/wp-content/uploads/2014/08/placeholder.png" alt="image"/></td>
-                </tr>
-                </tbody>
+                    </thead>
+                    <tbody id="principalTableBody" ng-repeat="person in principalObj">
+                    <tr>
+                        <td ng-show="edit"><i class="fas fa-arrow-up" ng-hide="person.ordering == 1" ng-click="rearrange('up', person.ordering)"></i> <i class="fas fa-arrow-down" ng-click="rearrange('down', person.ordering)"></i></td>
+                        <td><a href="/wiki?category=People&id={{person.nconst}}" target="_self">{{person.primary_name ? person.primary_name : '-----'}}</a></td>
+                        <td>{{person.category.charAt(0).toUpperCase()}}{{person.category.slice(1)}}</td>
+                        <td>{{person.characters ? person.characters.replace("[","").replace("]","") : '-----'}}</td>
+                        <td><img class="poster" id="posterC-{{$index}}" src="http://meeconline.com/wp-content/uploads/2014/08/placeholder.png" alt="image"/></td>
+                    </tr>
+                    </tbody>
 
-            </table>
+                </table>
+            </div>
         </div>
     </div>
 </div>
+
+
 </body>
 </html>
