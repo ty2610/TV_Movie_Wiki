@@ -2,11 +2,12 @@ var wikiApp = angular.module('wikiApp', []).config(['$locationProvider', functio
 
 wikiApp.controller('wikiController', function wikiController($scope, $location) {
     $scope.category = $location.search().category;
-    $scope.title = "Loading...";
+    $scope.id = $location.search().id;
+    $scope.edit = false;
 
     $scope.populate = () => {
         var paramCategory = $scope.category;
-        var id = $location.search().id;
+        var id = $scope.id;
         var url = "/wikiPopulate";
         var send = {id: id, paramCategory: paramCategory};
         $.ajax({
@@ -16,7 +17,6 @@ wikiApp.controller('wikiController', function wikiController($scope, $location) 
             cache: false,
             contentType: "application/x-www-form-urlencoded",
             success: (data) => {
-                console.log("ajax success");
                 if(paramCategory == "Title"){
                     $scope.parseTitle(JSON.parse(data));
                 }else{
@@ -38,7 +38,6 @@ wikiApp.controller('wikiController', function wikiController($scope, $location) 
                 cache: false,
                 contentType: "application/x-www-form-urlencoded",
                 success: (data) => {
-                    console.log("principals ajax success");
                     $scope.principalObj = JSON.parse(data);
                     $scope.$apply();
                     $scope.populatePincipalPoster();
@@ -73,7 +72,6 @@ wikiApp.controller('wikiController', function wikiController($scope, $location) 
     };
 
     $scope.parsePerson = (dataJson) => {
-        console.log("parsing Person...");
         console.log(dataJson);
         if(dataJson.length > 1){
             console.log("Error: too many results");
@@ -137,7 +135,6 @@ wikiApp.controller('wikiController', function wikiController($scope, $location) 
     };
 
     $scope.parseTitle = (dataJson) => {
-        console.log("parsing Title...");
         if(dataJson.length > 1){
             console.log("Error: too many results");
         }else{
@@ -209,6 +206,121 @@ wikiApp.controller('wikiController', function wikiController($scope, $location) 
                     console.log(error);
                 }
             });
+        }
+    }
+
+    $scope.updateTitle = () => {
+        var var1 = $('#inputTitleType').val();
+        var var2 = $('#genreSelect').val().join(", ");
+        var id = $scope.id;
+        var paramCategory = $scope.category;
+        console.log("var1: " + var1 + " var2: " + var2 + " id: " + id + " paramCategory:" + paramCategory);
+
+        $.ajax({
+            url: "/wikiUpdate",
+            data: {var1: var1, var2: var2, id: id, paramCategory: paramCategory},
+            type: 'POST',
+            cache: false,
+            contentType: "application/x-www-form-urlencoded",
+            success: (data) => {
+                console.log("update ajax success");
+                console.log(JSON.parse(data));
+            },
+            error: function (error) {
+                console.log("update ajax error");
+                console.log(error);
+            }
+        });
+    }
+
+    $scope.updatePerson = () => {
+        var var1 = $('#birthYearInput').val();
+        var var2 = $('#deathYearInput').val();
+        var var3 = $('#professionsSelect').val().join(", ");
+        var id = $scope.id;
+        var paramCategory = $scope.category;
+        console.log("var1: " + var1 + " var2: " + var2 + " var3: " + var3 + " id: " + id + " paramCategory:" + paramCategory);
+
+        $.ajax({
+            url: "/wikiUpdate",
+            data: {var1: var1, var2: var2, var3: var3, id: id, paramCategory: paramCategory},
+            type: 'POST',
+            cache: false,
+            contentType: "application/x-www-form-urlencoded",
+            success: (data) => {
+                console.log("update ajax success");
+                console.log(JSON.parse(data));
+            },
+            error: function (error) {
+                console.log("update ajax error");
+                console.log(error);
+            }
+        });
+    }
+
+    $scope.updateOrdering = (id1, ordering1, id2, ordering2) => {
+        $.ajax({
+            url: "/wikiUpdate",
+            data: {var1: id2, var2: ordering1, var3: ordering2, id: id1, paramCategory: "ordering", titleID: $scope.id},
+            type: 'POST',
+            cache: false,
+            contentType: "application/x-www-form-urlencoded",
+            success: (data) => {
+                console.log("ordering ajax success");
+                console.log(JSON.parse(data));
+            },
+            error: function (error) {
+                console.log("ordering ajax error");
+                console.log(error);
+            }
+        });
+    }
+
+    $scope.rearrange = (direction, ordering) => {
+        console.log(direction + " " + ordering);
+        var tempArr = $scope.principalObj;
+        var index = ordering - 1;
+        var temp1 = tempArr[index];
+        if(direction == "up"){
+            if(null != tempArr[index - 1]){
+                console.log("Switching " + tempArr[index].primary_name + "("+tempArr[index].ordering+") and " + tempArr[index-1].primary_name + "("+tempArr[index-1].ordering+")");
+
+                tempArr[index] = tempArr[index-1];
+                tempArr[index-1] = temp1;
+                tempArr[index].ordering = ordering;
+                tempArr[index-1].ordering = ordering-1;
+
+                $scope.updateOrdering(tempArr[index].nconst, tempArr[index].ordering, tempArr[index-1].nconst, tempArr[index-1].ordering);
+
+                console.log("At end: " + tempArr[index].primary_name + "("+tempArr[index].ordering+") and " + tempArr[index-1].primary_name + "("+tempArr[index-1].ordering+")");
+            }
+        }else{
+            if(null != tempArr[index + 1]){
+                console.log("Switching " + tempArr[index].primary_name + "("+tempArr[index].ordering+") and " + tempArr[index+1].primary_name + "("+tempArr[index+1].ordering+")");
+                tempArr[index] = tempArr[index+1];
+                tempArr[index+1] = temp1;
+                tempArr[index].ordering = ordering;
+                tempArr[index+1].ordering = ordering+1;
+
+                $scope.updateOrdering(tempArr[index].nconst, tempArr[index].ordering, tempArr[index+1].nconst, tempArr[index+1].ordering);
+                console.log("At end: " + tempArr[index].primary_name + "("+tempArr[index].ordering+") and " + tempArr[index+1].primary_name + "("+tempArr[index+1].ordering+")");
+            }
+        }
+        $scope.principalObj = tempArr;
+        console.log($scope.principalObj);
+    }
+
+    $scope.editPage = () => {
+        $scope.edit = true;
+        console.log("here");
+    }
+
+    $scope.submitChanges = () => {
+        $scope.edit = false;
+        if($scope.category == "Title"){
+            $scope.updateTitle();
+        }else{
+            $scope.updatePerson();
         }
     }
 });

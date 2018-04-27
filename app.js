@@ -11,6 +11,7 @@ var resultPageRouter = require('./routes/resultPage');
 var wikiRouter = require('./routes/wiki');
 var searchTitlePerson = require('./routes/searchTitlePerson');
 var wikiPopulateRouter = require('./routes/wikiPopulate');
+var wikiUpdateRouter = require('./routes/wikiUpdate');
 var posterRouter = require("./routes/posterPopulate");
 
 var app = express();
@@ -32,6 +33,7 @@ app.use("/resultPage", resultPageRouter);
 app.use("/wiki", wikiRouter);
 app.use("/searchTitlePerson", searchTitlePerson);
 app.use("/wikiPopulate", wikiPopulateRouter);
+app.use("/wikiUpdate", wikiUpdateRouter);
 app.use("/posterPopulate", posterRouter);
 
 
