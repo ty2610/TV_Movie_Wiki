@@ -14,7 +14,7 @@
         <link rel="stylesheet" href="stylesheets/index.css"/>
         <link rel="stylesheet" href="stylesheets/global.css"/>
     </head>
-    <body>
+    <body class="ng-cloak">
         <div ng-controller="IndexController">
             <!-- Navbar -->
             <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -54,13 +54,13 @@
                         <input class="form-control" type="text" name="textSearch" id="searchBox">
                     </div>
                     <div class="col-sm text-center">
-                        <select class="form-control" id="categorySelect">
+                        <select class="form-control" id="categorySelect" ng-model="myDropDown">
                             <option value="Select A Value">Select A Value</option>
                             <option value="Title">Title</option>
                             <option value="People">People</option>
                         </select>
                     </div>
-                    <div class="col-sm text-center">
+                    <div class="col-sm text-center" ng-if="myDropDown=='Title'">
                         <select multiple id="inputTitleType" class="form-control">
                             <option>Short</option>
                             <option>Movie</option>
@@ -72,7 +72,7 @@
                             <option>Video Game</option>
                         </select>
                     </div>
-                    <div class="col-sm text-center">
+                    <div class="col-sm text-center" ng-if="myDropDown=='People'">
                         <select multiple class="form-control" id="genreSelect">
                             <option>Action</option>
                             <option>Adventure</option>

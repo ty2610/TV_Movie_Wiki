@@ -1,6 +1,7 @@
 var indexApp = angular.module('indexApp', []);
 
 indexApp.controller('IndexController', function IndexController($scope) {
+    $scope.myDropDown = 'Select A Value';
     $scope.submitSearch = () => {
         var category = $("#categorySelect").val();
         var searchText = $("#searchBox").val();
