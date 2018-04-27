@@ -14,54 +14,69 @@
     <link rel="stylesheet" href="stylesheets/global.css"/>
 </head>
 <body>
-<div class="container about">
-    <div class="row justify-content-md-center">
-        <div class="col-md-8">
-            <h1>About the Project</h1>
-            <p>
-                Breath of Fresh Air is a project designed for the Web Development course at the University of St. Thomas taught by Dr. Tommy Marrinan. For this project, our goal was to create an air quality web app that combines the visualization of Google Maps with the data provided by the OpenAQ Platform.
-            </p>
-            <h3>Google Maps API</h3>
-            <p>
-                The <a target="_blank" href="https://developers.google.com/maps/">Google Maps API</a> is the backbone of the Breath of Fresh Air project, powering the main functionality and allowing us to serve relevant air quality data for the location shown in the map. To further increase the usability of the map, we used a feature called Marker Clustering to reduce cluttering on screen. Speaking of the markers, try clicking on one! It will show the measurement gathered at that location.
-            </p>
-            <h3>OpenAQ</h3>
-            <p>
-                While Google Maps is the technological centerpiece of this project, <a target="_blank" href="https://openaq.org">OpenAQ</a> is the information one. Gathering air quality measurments from 8,415 location in 64 countries, OpenAQ is fighting to increase awareness and reduce air pollution by aggregating data from 103 different government level and research grade sources and providing a free API to access this data. to learn more information about OpenAQ, we recommend visiting their <a target="_blank" href="https://github.com/openaq/openaq-info/blob/master/FAQ.md">FAQ</a>.
-            </p>
-            <h3>Frameworks</h3>
-            <p>
-                This site was created using both <a target="_blank" href="https://getbootstrap.com/">Bootstrap 4</a> and <a target="_blank" href="https://angularjs.org/">AngularJS</a>. Bootstrap was used to format the page correctly using their grid system to section the page and prvice some default CSS styling. Angular was used for its templating and table creation. The font used is Called <a target="_blank" href="https://fonts.google.com/specimen/Raleway">Raleway</a>, which is from Google Fonts. For more details, take a look at our <a target="_blank" href="https://github.com/ntscheel/AirQualityApp">source code</a>!
-            </p>
+<div>
+    <!-- START NAV -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href>Wiki</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item"><a class="nav-link" href="/" target="_self">Home </a></li>
+                <li class="nav-item"><a class="nav-link" href="/about" target="_self">About The Project </a></li>
+            </ul>
+        </div>
+    </nav>
+    <!-- END NAV -->
+    <div class="container about">
+        <div class="row justify-content-md-center">
+            <div class="col-md-8">
+                <h1>About the Project</h1>
+                <p>
+                    Breath of Fresh Air is a project designed for the Web Development course at the University of St. Thomas taught by Dr. Tommy Marrinan. For this project, our goal was to create an air quality web app that combines the visualization of Google Maps with the data provided by the OpenAQ Platform.
+                </p>
+                <h3>Google Maps API</h3>
+                <p>
+                    The <a target="_blank" href="https://developers.google.com/maps/">Google Maps API</a> is the backbone of the Breath of Fresh Air project, powering the main functionality and allowing us to serve relevant air quality data for the location shown in the map. To further increase the usability of the map, we used a feature called Marker Clustering to reduce cluttering on screen. Speaking of the markers, try clicking on one! It will show the measurement gathered at that location.
+                </p>
+                <h3>OpenAQ</h3>
+                <p>
+                    While Google Maps is the technological centerpiece of this project, <a target="_blank" href="https://openaq.org">OpenAQ</a> is the information one. Gathering air quality measurments from 8,415 location in 64 countries, OpenAQ is fighting to increase awareness and reduce air pollution by aggregating data from 103 different government level and research grade sources and providing a free API to access this data. to learn more information about OpenAQ, we recommend visiting their <a target="_blank" href="https://github.com/openaq/openaq-info/blob/master/FAQ.md">FAQ</a>.
+                </p>
+                <h3>Frameworks</h3>
+                <p>
+                    This site was created using both <a target="_blank" href="https://getbootstrap.com/">Bootstrap 4</a> and <a target="_blank" href="https://angularjs.org/">AngularJS</a>. Bootstrap was used to format the page correctly using their grid system to section the page and prvice some default CSS styling. Angular was used for its templating and table creation. The font used is Called <a target="_blank" href="https://fonts.google.com/specimen/Raleway">Raleway</a>, which is from Google Fonts. For more details, take a look at our <a target="_blank" href="https://github.com/ntscheel/AirQualityApp">source code</a>!
+                </p>
+            </div>
+        </div>
+        <div class="row justify-content-md-center">
+            <div class="col-md-8">
+                <h1>Demo Video</h1>
+                <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/bQldEDa5kZo?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+            </div>
+        </div>
+        <div class="row justify-content-md-center">
+            <div class="col-md-8">
+                <h1>About the Team</h1>
+            </div>
+        </div>
+        <div class="row justify-content-md-center">
+            <div class="col-md-4">
+                <img src="img/nick.jpg" alt="NickScheelImage" class="aboutImg"/>
+                <h2>Nick Scheel</h2>
+                <p>
+                    I'm a senior computer science major at the University of St. Thomas looking to begin my career in software development. In addition to my studies I serve as the President of the Computer Science Club, and I'm also an avid tabletop board game enthusiast!            </p>
+            </div>
+            <div class="col-md-4">
+                <img src="img/zach.jpg" alt="ZachSorensonImage" class="aboutImg"/>
+                <h3>Zach Sorenson</h3>
+                <p>
+                    I'm a junior at UST majoring in Computer Science with minors in Math and Statistics. Besides my love of technology, I love singing and acting, and do lots of musical theater in my spare time.
+                </p>
+            </div>
         </div>
     </div>
-    <div class="row justify-content-md-center">
-        <div class="col-md-8">
-            <h1>Demo Video</h1>
-            <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/bQldEDa5kZo?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-        </div>
-    </div>
-    <div class="row justify-content-md-center">
-        <div class="col-md-8">
-            <h1>About the Team</h1>
-        </div>
-    </div>
-    <div class="row justify-content-md-center">
-        <div class="col-md-4">
-            <img src="img/nick.jpg" alt="NickScheelImage" class="aboutImg"/>
-            <h2>Nick Scheel</h2>
-            <p>
-                I'm a senior computer science major at the University of St. Thomas looking to begin my career in software development. In addition to my studies I serve as the President of the Computer Science Club, and I'm also an avid tabletop board game enthusiast!            </p>
-        </div>
-        <div class="col-md-4">
-            <img src="img/zach.jpg" alt="ZachSorensonImage" class="aboutImg"/>
-            <h3>Zach Sorenson</h3>
-            <p>
-                I'm a junior at UST majoring in Computer Science with minors in Math and Statistics. Besides my love of technology, I love singing and acting, and do lots of musical theater in my spare time.
-            </p>
-        </div>
-    </div>
-
 </div>
 </body>
 </html>
