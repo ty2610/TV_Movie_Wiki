@@ -28,12 +28,16 @@ resultApp.controller('ResultController', function ResultController($scope, $loca
         $scope.useSpinner = true;
         var paramCategory;
         var paramSearchText;
+        var titleType;
+        var roleType;
         if(cat!==undefined) {
             paramCategory = cat;
             paramSearchText = text;
         } else {
             paramCategory = $location.search().category;
             paramSearchText = $location.search().searchText;
+            titleType = $location.search().titleType;
+            roleType = $location.search().roleType;
         }
 
         if ("" === paramSearchText) {
@@ -52,7 +56,7 @@ resultApp.controller('ResultController', function ResultController($scope, $loca
 
         $('#searchBox').val(paramSearchText);
         var url = "/searchTitlePerson";
-        var send = {category: paramCategory, searchText: paramSearchText};
+        var send = {category: paramCategory, searchText: paramSearchText, roleType: roleType, titleType: titleType};
         if(paramCategory === "People") {
             $scope.isPeople = true;
         } else {
