@@ -27,7 +27,6 @@
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item"><a class="nav-link" href="/" target="_self">Home </a></li>
                 <li class="nav-item"><a class="nav-link" href="/about" target="_self">About The Project </a></li>
-                <li><button class="btn" ng-hide="edit" ng-click="editPage()">Edit</button><button class="btn" ng-show="edit" ng-click="submitChanges()">Submit Changes</button></li>
                 <li>
                     <div class="mini-loader-content">
                         <svg id="mini-loader" ng-show="useSpinner" xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 500.00001 500.00001">
@@ -47,6 +46,7 @@
                     </div>
                 </li>
             </ul>
+            <button class="btn" ng-hide="edit" ng-click="editPage()">Edit this page</button><button class="btn" ng-show="edit" ng-click="submitChanges()">Submit Changes</button>
         </div>
     </nav>
     <!-- END NAV -->
