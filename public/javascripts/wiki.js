@@ -41,6 +41,7 @@ wikiApp.controller('wikiController', function wikiController($scope, $location) 
                     console.log("principals ajax success");
                     $scope.principalObj = JSON.parse(data);
                     $scope.$apply();
+                    $scope.populatePincipalPoster();
                 },
                 error: function (error) {
                     console.log("principals ajax error");
@@ -78,33 +79,40 @@ wikiApp.controller('wikiController', function wikiController($scope, $location) 
             console.log("Error: too many results");
         }else{
             var data = dataJson[0];
-            $scope.title = data.primary_name;
-            $scope.primaryName = data.primary_name;
-            $scope.birthYear = data.birth_year;
-            $scope.deathYear = data.death_year;
-            $scope.professions = data.primary_profession.charAt(0).toUpperCase() + data.primary_profession.slice(1);
-            $scope.professions = $scope.professions.replace(/,/g, ", ");
-            var titlesArr = data.known_for_titles.split(',');
-            console.log(titlesArr);
-            $.ajax({
-                url: "/wikiPopulate",
-                data: {id: data.known_for_titles, paramCategory: "getTitles"},
-                type: 'POST',
-                cache: false,
-                contentType: "application/x-www-form-urlencoded",
-                success: (data) => {
-                    console.log("titles ajax success");
-                    $scope.titlesJSON = JSON.parse(data);
-                    $scope.$apply();
-                    $scope.populateKnownPosters();
-                },
-                error: function (error) {
-                    console.log("principals ajax error");
-                    console.log(error);
-                }
-            });
+            if(data !== undefined) {
+                $scope.title = data.primary_name;
+                $scope.primaryName = data.primary_name;
+                $scope.birthYear = data.birth_year;
+                $scope.deathYear = data.death_year;
+                $scope.professions = data.primary_profession.charAt(0).toUpperCase() + data.primary_profession.slice(1);
+                $scope.professions = $scope.professions.replace(/,/g, ", ");
+                var titlesArr = data.known_for_titles.split(',');
+                console.log(titlesArr);
+                $.ajax({
+                    url: "/wikiPopulate",
+                    data: {id: data.known_for_titles, paramCategory: "getTitles"},
+                    type: 'POST',
+                    cache: false,
+                    contentType: "application/x-www-form-urlencoded",
+                    success: (data) => {
+                        console.log("titles ajax success");
+                        $scope.titlesJSON = JSON.parse(data);
+                        $scope.$apply();
+                        $scope.populateKnownPosters();
+                    },
+                    error: function (error) {
+                        console.log("principals ajax error");
+                        console.log(error);
+                    }
+                });
+            }
             url = "/posterPopulate";
-            var id = data.nconst;
+            var id;
+            if(data === undefined) {
+                id = $location.search().id;
+            } else {
+                id = data.nconst;
+            }
             send = {id: id, category: "People"};
             $.ajax({
                 url: url,
@@ -151,6 +159,7 @@ wikiApp.controller('wikiController', function wikiController($scope, $location) 
             var category = "Title";
             var id = $scope.titlesJSON[i].tconst;
             var selector = "#posterK-";
+            var url = "/posterPopulate";
             send = {id: id, category: category, increment: i};
             $.ajax({
                 url: url,
@@ -173,4 +182,33 @@ wikiApp.controller('wikiController', function wikiController($scope, $location) 
             });
         }
     };
+
+    $scope.populatePincipalPoster = () => {
+        for(var i=0; i<$scope.principalObj.length; i++) {
+            var category = "People";
+            var id = $scope.principalObj[i].nconst;
+            var selector = "#posterC-";
+            var url = "/posterPopulate";
+            send = {id: id, category: category, increment: i};
+            $.ajax({
+                url: url,
+                data: send,
+                type: 'POST',
+                cache: false,
+                contentType: "application/x-www-form-urlencoded",
+                success: (data) => {
+                    if (data !== "error") {
+                        console.log("posters ajax success");
+                        $scope.posterURL = "http://" + data.host + data.path;
+                        $(selector + data.increment).attr("src", $scope.posterURL);
+                        $scope.$apply();
+                    }
+                },
+                error: function (error) {
+                    console.log("posters ajax error");
+                    console.log(error);
+                }
+            });
+        }
+    }
 });
