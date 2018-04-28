@@ -49,18 +49,21 @@
             </nav>
 
             <div class="container-fluid">
-                <div class="row justify-content-center">
-                    <div class="col-sm text-center">
+                <div class="row justify-content-center" style="margin-top: 20px;">
+                    <div class="col-sm">
+                        <label for="searchBox">Search:</label>
                         <input class="form-control" type="text" name="textSearch" id="searchBox">
                     </div>
-                    <div class="col-sm text-center">
+                    <div class="col-sm">
+                        <label for="categorySelect">Category:</label>
                         <select class="form-control" id="categorySelect" ng-model="myDropDown">
                             <option value="Select A Value">Select A Value</option>
                             <option value="Title">Title</option>
                             <option value="People">People</option>
                         </select>
                     </div>
-                    <div class="col-sm text-center" ng-if="myDropDown=='Title'">
+                    <div class="col-sm" ng-if="myDropDown=='Title'">
+                        <label for="inputTitleType">Title Type:</label>
                         <select id="inputTitleType" class="form-control">
                             <option>All</option>
                             <option>Short</option>
@@ -73,7 +76,8 @@
                             <option>Video Game</option>
                         </select>
                     </div>
-                    <div class="col-sm text-center" ng-if="myDropDown=='People'">
+                    <div class="col-sm " ng-if="myDropDown=='People'">
+                        <label for="roleSelect">Profession:</label>
                         <select class="form-control" id="roleSelect">
                             <option>All</option>
                             <option>Actor</option>
@@ -89,8 +93,8 @@
                             <option>Cinematographer</option>
                         </select>
                     </div>
-                    <div class="col-sm text-center">
-                        <input class="btn btn-primary" type="submit" value="Submit" ng-click="submitSearch()">
+                    <div class="col-sm ">
+                        <input class="btn btn-primary" type="submit" value="Submit" ng-click="submitSearch()" style="margin-top: 30px;">
                     </div>
                 </div>
             </div>
