@@ -52,10 +52,39 @@
                     <input class="form-control" type="text" name="textSearch" id="searchBox">
                 </div>
                 <div class="col-sm text-center">
-                    <select class="form-control" id="categorySelect">
+                    <select class="form-control" id="categorySelect" ng-model="myDropDown">
                         <option value="Select A Value">Select A Value</option>
                         <option value="Title">Title</option>
                         <option value="People">People</option>
+                    </select>
+                </div>
+                <div class="col-sm text-center" ng-if="myDropDown=='Title'">
+                    <select id="inputTitleType" class="form-control">
+                        <option>All</option>
+                        <option>Short</option>
+                        <option>Movie</option>
+                        <option>TV Movie</option>
+                        <option>TV Series</option>
+                        <option>TV Short</option>
+                        <option>TV Mini Series</option>
+                        <option>TV Special</option>
+                        <option>Video Game</option>
+                    </select>
+                </div>
+                <div class="col-sm text-center" ng-if="myDropDown=='People'">
+                    <select class="form-control" id="roleSelect">
+                        <option>All</option>
+                        <option>Actor</option>
+                        <option>Actress</option>
+                        <option>Writer</option>
+                        <option>Director</option>
+                        <option>Assistant_director</option>
+                        <option>Soundtrack</option>
+                        <option>Producer</option>
+                        <option>Miscellaneous</option>
+                        <option>Composer</option>
+                        <option>Music_department</option>
+                        <option>Cinematographer</option>
                     </select>
                 </div>
                 <div class="col-sm text-center">

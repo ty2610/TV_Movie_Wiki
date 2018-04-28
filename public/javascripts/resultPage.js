@@ -7,6 +7,7 @@ $(document).ready(function() {
 var resultApp = angular.module('resultApp', []).config(['$locationProvider', function($locationProvider) { $locationProvider.html5Mode({ enabled: true, requireBase: false }); }]);
 
 resultApp.controller('ResultController', function ResultController($scope, $location) {
+    $scope.myDropDown = 'Select A Value';
     $scope.searchJSON;
     $scope.isPeople;
     $scope.useSpinner = false;
@@ -15,6 +16,8 @@ resultApp.controller('ResultController', function ResultController($scope, $loca
     $scope.submitSearch = () => {
         var category = $("#categorySelect").val();
         var searchText = $("#searchBox").val();
+        var titleType;
+        var roleType;
         if ("" === searchText) {
             window.alert("You must include text to search for");
         } else if("Select A Value" === category){
@@ -49,9 +52,12 @@ resultApp.controller('ResultController', function ResultController($scope, $loca
         }
 
         if(paramCategory === "People") {
-            $('#categorySelect option[value=People]').prop('selected', true);
+            //$('#categorySelect option[value=People]').prop('selected', true);
+            $scope.myDropDown = 'People';
+
         } else {
-            $('#categorySelect option[value=Title]').prop('selected', true);
+            //$('#categorySelect option[value=Title]').prop('selected', true);
+            $scope.myDropDown = 'Title';
         }
 
         $('#searchBox').val(paramSearchText);

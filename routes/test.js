@@ -8,7 +8,7 @@ if (process.env.NODE_ENV === 'tyler') {
 } else if (process.env.NODE_ENV === 'nick') {
     dbURL = "C:\\Users\\ntscheel\\Documents\\imdb.sqlite3";
 } else if (process.env.NODE_ENV === 'production') {
-    dbURL = "/imdb.sqlite3";
+    dbURL = "imdb.sqlite3";
 }
 
 var db = new sqlite3.Database(dbURL);
