@@ -16,18 +16,24 @@ resultApp.controller('ResultController', function ResultController($scope, $loca
     $scope.submitSearch = () => {
         var category = $("#categorySelect").val();
         var searchText = $("#searchBox").val();
-        var titleType;
-        var roleType;
+        var titleType = $("#inputTitleType").val();
+        var roleType = $("#roleSelect").val();
         if ("" === searchText) {
             window.alert("You must include text to search for");
         } else if("Select A Value" === category){
             window.alert("You must select a category to search for");
         } else {
-            $scope.search(category, searchText);
+            if(titleType === "All") {
+                titleType = undefined;
+            }
+            if(roleType === "All") {
+                roleType = undefined;
+            }
+            $scope.search(category, searchText, titleType, roleType);
         }
     };
 
-    $scope.search = (cat,text) => {
+    $scope.search = (cat,text,titleText,roleText) => {
         $scope.useSpinner = true;
         var paramCategory;
         var paramSearchText;
@@ -36,6 +42,8 @@ resultApp.controller('ResultController', function ResultController($scope, $loca
         if(cat!==undefined) {
             paramCategory = cat;
             paramSearchText = text;
+            titleType = titleText;
+            roleType = roleText;
         } else {
             paramCategory = $location.search().category;
             paramSearchText = $location.search().searchText;
@@ -75,6 +83,9 @@ resultApp.controller('ResultController', function ResultController($scope, $loca
             cache: false,
             contentType: "application/x-www-form-urlencoded",
             success: (data) => {
+                if(data.length === 2){
+                    $scope.useSpinner = false;
+                }
                 $scope.searchJSON = JSON.parse(data);
                 $scope.$apply();
                 $scope.populatePhotos(paramCategory);

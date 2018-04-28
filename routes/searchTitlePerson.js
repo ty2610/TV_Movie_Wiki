@@ -28,12 +28,15 @@ router.post('/', function(req, res, next) {
     if(category === "Title") {
         query = "SELECT * FROM Titles WHERE primary_title LIKE '" + searchText + "'";
         if(titleType !== undefined) {
-
+            query += " AND title_type LIKE " + "'" + titleType + "'"
         }
         //I WOULD APPEND ANOTHER part to the where SOMETHING LIKE THIS
         //AND title_type LIKE "titleType"
     } else if (category === "People") {
         query = "SELECT * FROM Names WHERE primary_name LIKE '" + searchText + "'";
+        if(roleType !== undefined) {
+            query += " AND primary_profession LIKE " + "'%" + roleType + "%'";
+        }
     } else {
         res.send("Incorrect category provided.");
     }
@@ -41,15 +44,6 @@ router.post('/', function(req, res, next) {
     db.all(query, (err, result) => {
         console.log(JSON.stringify(result));
         var data = JSON.stringify(result);
-        if (category === "People" && data.length > 0) {
-            if(roleType !== undefined) {
-                for(var j=0; j<data.length; j++) {
-                    //THIS IS WHERE YOU WILL SPLICE OUT AN ELEMENT OF DATA
-                    //IF THE roleType IS FOUND WITHIN THE ARRAY OF primary_profession
-                    //OF EACH DATA ELEMENT
-                }
-            }
-        }
         res.send(data);
         db.close();
     });
